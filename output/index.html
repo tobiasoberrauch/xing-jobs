@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>front-end technology talk</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="/manifest.json"></link>
+<meta name="theme-color" content="transparent">
+<meta name="description" content="Blog with articles on all things web development: CSS, JS, Node, HTML, A11Y">
+<meta name="keywords" content="Web, Web Ops, DevOps, Performance, Front-End, JavaScript, CSS">
+
+
+<style>
+*{box-sizing:border-box}*:after,*:before{box-sizing:inherit}html{font-size:16px}body{font-weight:300;font-size:1rem;line-height:1.5em;font-family:"Fira Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";color:#454545;margin:0}@media (min-width: 40em){html{font-size:18px}}a,a:visited{color:#27ae60;color:var(--main-color, #27ae60);text-decoration:none}a:focus,a:hover{color:#36d278;color:var(--highlight-color, #36d278)}h1{font-size:1.7rem}h1,h2,h3,b,strong{font-weight:500}.wrapper h1{line-height:1.2em}h1,h2,h3,h4,h5{margin-top:1.75em}img{max-width:100%}code{font-family:'Monaco', monospace;font-size:0.8rem}ol{padding-left:1.4rem}ol li{padding-left:0.5rem}ul{padding-left:1.1rem}figure{margin:1rem 0 1rem -1rem;width:calc(100% + 2rem)}figcaption{margin-left:1rem;margin-right:1rem;font-style:italic}@media (min-width: 800px){figure{margin:2rem 0 2rem -2rem;width:calc(100% + 4rem)}figcaption{margin-left:2rem;margin-right:2rem}}.wrapper{position:relative;margin-left:auto;margin-right:auto;background-color:white;color:#454545;padding:1rem;max-width:53em;padding-bottom:2rem;min-height:calc(100vh - 47px)}@media (min-width: 50em){.wrapper{padding:1rem 5rem 1rem}}@media (min-width: 85em){.wrapper{margin-left:0;margin-top:-1rem}}.aspect{position:relative;width:100%;height:0;margin:1em 0;overflow:hidden}.aspect.ratio-16-to-9{padding-bottom:56.25%}.aspect.ratio-4-to-3{padding-bottom:75%}.aspect>*{position:absolute;top:0;left:0;width:100%;height:100%}.highlight{margin:1rem -1rem;padding:0 1rem;overflow:auto;color:#fafafa;background-color:#454545}@media (min-width: 50em){.highlight{width:calc(100% + 10rem);margin:1rem -5rem;padding:0 5rem}}.note{background-color:#f7dc6f;padding:1rem;margin:1rem -1rem 0}@media (min-width: 50em){.note{width:calc(100% + 10rem);margin:1rem -5rem 0;padding:1rem 5rem}}@media (min-width: 85em){.note{margin-top:0}}.main-header{position:relative;margin-left:auto;margin-right:auto;max-width:53em;text-align:center;text-transform:lowercase}@media (min-width: 85em){.main-header{position:fixed;left:53rem;height:100vh;padding:4rem;font-weight:300;width:100%;text-align:left;margin-left:0;border-left:1px solid rgba(0,0,0,0.1);top:0;z-index:2;background-color:white}}.main-nav{list-style-type:none;margin:0;padding:0}.nav-item{line-height:2em;display:block;transition:all 0.3s ease;padding:0 1rem;margin:0 -1rem}.nav-item:hover,.nav-item:focus{background-color:#27ae60;background-color:var(--main-color, #27ae60);color:white}.main-title{font-weight:300;color:#27ae60;color:var(--main-color, #27ae60)}@media (max-width: 85em){.main-nav{display:flex;justify-content:center;width:100%;flex-wrap:wrap}.nav-item{padding:0 0.5rem;margin:0}}.paging{position:relative;list-style-type:none;margin:1rem 0 0;padding:0;max-width:53em;display:flex;background-color:#27ae60;background-color:var(--main-color, #27ae60);color:white;margin-left:auto;margin-right:auto}.paging-item{flex:1 0 50%;padding:0}.paging-link,.paging-link:visited{padding:1rem;display:block;color:white;transition:all 0.3s ease;height:100%}.paging-link:hover,.paging-link:focus{background-color:white;color:#27ae60;color:var(--main-color, #27ae60)}.link-prev:before{content:'Previous: '}.link-next:before{content:'Next: '}@media (min-width: 85em){.paging{margin-left:0;padding-left:4rem}}.post-title a[href^=http]:before{content:'\279e  '}.post-date{font-size:0.8rem;color:#666;margin-top:-0.7em}.read-more:before{content:'\279e  '}.highlight .c{color:#998;font-style:italic}.highlight .cm{color:#998;font-style:italic}.highlight .cp{color:#998}.highlight .c1{color:#998;font-style:italic}.highlight .cs{color:#998;font-weight:bold;font-style:italic}.highlight .gd{color:#000;background-color:#fdd}.highlight .gd .x{color:#000;background-color:#faa}.highlight .ge{font-style:italic}.highlight .gr{color:#a00}.highlight .gh{color:#998}.highlight .gi{color:#000;background-color:#dfd}.highlight .gi .x{color:#000;background-color:#afa}.highlight .go{color:#888}.highlight .gp{color:#998}.highlight .gu{color:#aaa}.highlight .gt{color:#a00}.highlight .k,.highlight .kd,.highlight .kr,.highlight .kt{color:#25AFD1}.highlight .m{color:#FF4A58}.highlight .s{color:#FF4A58}.highlight .na{color:#25AFD1}.highlight .nb{color:#0086B3}.highlight .nc{color:#fe0000}.highlight .no{color:#25AFD1}.highlight .ni{color:purple}.highlight .ne{color:#fe0000}.highlight .nf{color:#fe0000}.highlight .nn{color:#998}.highlight .nt{color:#fff}.highlight .nv{color:#25AFD1}.highlight .w{color:#bbb}.highlight .mf{color:#FF4A58}.highlight .mh{color:#FF4A58}.highlight .mi{color:#FF4A58}.highlight .mo{color:#FF4A58}.highlight .sb{color:#FF4A58}.highlight .sc{color:#FF4A58}.highlight .sd{color:#FF4A58}.highlight .s2{color:#FF4A58}.highlight .se{color:#FF4A58}.highlight .sh{color:#FF4A58}.highlight .si{color:#FF4A58}.highlight .sx{color:#FF4A58}.highlight .s1{color:#FF4A58}.highlight .ss{color:#990073}.highlight .bp{color:#998}.highlight .vc{color:#25AFD1}.highlight .vg{color:#25AFD1}.highlight .vi{color:#25AFD1}.highlight .il{color:#FF4A58}.appearances{list-style-type:none;margin:0;padding:0}.appearance__date{font-size:0.8rem;color:grey;display:block}.appearance__detail{padding:1rem 0}.appearance__detail+.appearance__detail{border-top:1px solid lightgray}.talks{list-style-type:none;padding:0}.talk__entry:before{content:'Talk: ';color:grey}.talk--workshop:before{content:'Workshop: '}.talk__coverage+.talk__coverage:before{content:'| ';color:#454545}.talk__coverage+.talk__coverage:before:hover,.talk__coverage+.talk__coverage:before:active,.talk__coverage+.talk__coverage:before:visited{color:#454545}.talk__entry{padding-left:0}.foot{font-size:0.7rem;color:white;background-color:#454546;padding:0.1rem 1rem}@media (min-width: 50em){.foot{padding:0.1rem 3rem}}@media (min-width: 85em){.foot{margin-right:3rem}}.visually-hidden{visibility:hidden;position:absolute}.theme-blue{--main-color: #007ACC;--highlight-color: #0099ff}
+
+</style>
+
+<link rel="alternate" type="application/rss+xml" title="front-end technology talk &raquo; Updates" href="http://www.fettblog.eu/atom.xml">
+
+<link rel="pingback" href="https://webmention.io/fettblog.eu/xmlrpc">
+<link rel="webmention" href="https://webmention.io/fettblog.eu/webmention">
+<link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="/icon/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/icon/favicon-16x16.png" sizes="16x16">
+</head>
+<body>
+<header class="main-header">
+<h1 class="main-title">Stefan Baumgartner</h1>
+<p>Web ops, performance and front-end</p>
+<nav>
+<ul class="main-nav">
+<li><a href="/" class="nav-item">Home</a></li>
+<li><a href="/contact/" class="nav-item">About</a></li>
+<li><a href="/speaking/" class="nav-item">Speaking</a></li>
+<li><a href="/typescript-react/" class="nav-item">Typescript + React</a></li>
+<li><a href="https://scriptconf.org" class="nav-item">ScriptConf</a></li>
+
+<li><a href="/snippets/" class="nav-item">Snippets</a></li>
+<li><a href="https://twitter.com/ddprrt" class="nav-item">Twitter</a></li>
+</ul>
+</nav>
+</header>
+<section class="wrapper">
+<h1 class="visually-hidden">List of articles</h1>
+<article class="post">
+<h2 class="post-title"><a href="/top-talks-to-watch-2018/">My most favourite talks in 2018</a></h2>
+<div class="post-date">27 December 2018</div>
+<p>It’s that time of the year again! For the fourth time in a row, I’m sharing my most
+favourite conference talks of the year! And again I found some incredible gems that I can’t
+wait to share with you!</p>
+<p><a class="read-more" href="/top-talks-to-watch-2018/">Read more</a></p>
+</article>
+<article class="post">
+<h2 class="post-title"><a href="/typescript-react/context/">TypeScript and React Guide: Added a new context chapter</a></h2>
+<div class="post-date">16 December 2018</div>
+<p>React’s context API has be slumbering inside for a while. With one of the latest releases, they decide to open
+this API to everybody. It’s very nice to use if you like render props. If not, there’s always the new hooks
+API that makes it even easier.</p>
+<p>TypeScript works amazingly well with context. You don’t need to provide any type definitions at all. Only in some
+edge cases.</p>
+<p><a class="read-more" href="/typescript-react/context/">Check it out</a></p>
+</article>
+<article class="post">
+<h2 class="post-title"><a href="/typescript-built-in-generics/">TypeScript: Built-in generic types</a></h2>
+<div class="post-date">12 December 2018</div>
+<p>TypeScript comes with a ton of built in generic types that ease your development workflow. Here’s a list of all built-in generics, with examples!</p>
+<p><a class="read-more" href="/typescript-built-in-generics/">Read more</a></p>
+</article>
+<article class="post">
+<h2 class="post-title"><a href="/typescript-type-predicates/">TypeScript: Type predicates</a></h2>
+<div class="post-date">29 November 2018</div>
+<p>Type predicates in TypeScript help you narrowing down your types based on conditionals. They’re similar to type guards, but work on functions.
+They way the work is, if a function returns true, change the type of the paramter to something more useful.</p>
+<p><a class="read-more" href="/typescript-type-predicates/">Read more</a></p>
+</article>
+<article class="post">
+<h2 class="post-title"><a href="/jsx-syntactic-sugar/">JSX is syntactic sugar</a></h2>
+<div class="post-date">21 November 2018</div>
+<p>If you follow me you know that I’m super late to the React game. It was not until functional components showed up that I got
+really interested in the framework. I just loved the idea of having everything wrapped in an easy function rather than needing
+to navigate up and down a class to get everything together. One thing that put me off in the beginning though was JSX. And I’m
+sure I’m not the only one. Every time I talk to people about my newly found React love, this point comes up constantly.</p>
+<p><a class="read-more" href="/jsx-syntactic-sugar/">Read more</a></p>
+</article>
+<article class="post">
+<h2 class="post-title"><a href="/typescript-react/hooks/">TypeScript and React Guide: Added a new hooks chapter</a></h2>
+<div class="post-date">15 November 2018</div>
+<p>Hooks are a new feature in React that I personally find pretty exciting. Shortly after their release in React 16.7., people started
+developing TypeScript typings via DefinitelyTyped. They’re pretty good, as you don’t have to do much to get all the type safety you need. I put together a little list of things to consider for all hook types in my TypeScript + React guide.</p>
+<p><a class="read-more" href="/typescript-react/hooks/">Check it out</a></p>
+</article>
+<article class="post">
+<h2 class="post-title"><a href="/rock-the-cfp/">Getting your CfP application right</a></h2>
+<div class="post-date">14 November 2018</div>
+<p>We just started the <em>Call for Presentations</em> for the upcoming <a href="https://devone.at">DevOne</a> conference,
+and I couldn’t be more excited. Last year’s proposals where excellent and a great addition to our
+line-up. And by looking at the people who already registered interest, I’m sure that there’s a ton of
+great stuff coming up.</p>
+<p><a class="read-more" href="/rock-the-cfp/">Read more</a></p>
+</article>
+<article class="post">
+<h2 class="post-title"><a href="/angular-connect/">FAQ on our Angular Connect Talk: Automating UI development</a></h2>
+<div class="post-date">08 November 2018</div>
+<p>I’m writing these lines as I fly back from an excellent Angular Connect. I started public speaking a couple of years ago, and this particular talk will be one I’m going to remember for a long time. I think it’s easily on par with my most favourite speaking experience that I had back in 2013 with Breaking Development.</p>
+<p><a class="read-more" href="/angular-connect/">Read more</a></p>
+</article>
+<article class="post">
+<h2 class="post-title"><a href="/typescript-substitutability/">TypeScript and Substitutability</a></h2>
+<div class="post-date">16 March 2018</div>
+<p>When starting with TypeScript it took not much time to stumble upon some of the type system’s odds. Odds that make a lot of sense if you take a closer look. In this article I want to show you why and how in some cases, TypeScript allows non-matching method signatures.</p>
+<p><a class="read-more" href="/typescript-substitutability/">Read more</a></p>
+</article>
+<article class="post">
+<h2 class="post-title"><a href="/typescript-node-visual-studio-code/">Debugging Node.js apps in TypeScript with Visual Studio Code</a></h2>
+<div class="post-date">14 March 2018</div>
+<p>When developing, there’s three things that I absolutely enjoy:</p>
+<ul>
+<li>Creating Node.js apps</li>
+<li>Working with TypeScript</li>
+<li>Debugging said apps in Visual Studio Code</li>
+</ul>
+<p><a class="read-more" href="/typescript-node-visual-studio-code/">Read more</a></p>
+</article>
+</section>
+<nav class="navigation-wrapper">
+<ul class="navigation paging">
+<li class="paging-item next"><a class="paging-link" rel="next" href="/blog/page/2">Previous articles</a></li>
+</ul>
+</nav>
+<footer class="foot">
+<p>Got any questions? Hit me up on <a href="https://twitter.com/ddprrt">Twitter</a></p>
+</footer>
+<script async>
+if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+  console.log('[PWA Builder] active service worker found, no need to register')
+} else if(navigator.serviceWorker) {
+  //Register the ServiceWorker
+  navigator.serviceWorker.register('/pwabuilder-sw.js', {
+    scope: '/'
+  }).then(function(reg) {
+    console.log('Service worker has been registered for scope:'+ reg.scope);
+  });
+}
+</script>
+</body>
+</html>
