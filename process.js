@@ -53,10 +53,10 @@ function process(keywords, html) {
     };
 }
 
-let keywords = 'machine%20learning';
+let keywords = 'künstliche%20intelligenz';
 let items = [];
 
-for (let page_number = 1; page_number < 41; page_number++) {
+for (let page_number = 1; page_number < 39; page_number++) {
     let html = fs.readFileSync('cache/2019-01-27/' + keywords + '-' + page_number + '.html', 'utf-8');
     let data = process(keywords, html);
 
@@ -65,23 +65,31 @@ for (let page_number = 1; page_number < 41; page_number++) {
 
 console.log('Processing ' + items.length + ' items');
 
+let counter = 0;
 async.eachSeries(items, function (item, callback) {
-    let url = new URL(item.link);
+    let url;
+    try {
+        url = new URL(item.link);
+    } catch (TypeError) {
+        return callback();
+    }
     let now = new Date().toISOString().split('T')[0];
     let file_path = 'cache/' + now + '/' + url.pathname + '.html';
 
     if (fs.existsSync(file_path)) {
-        console.log('[CACHE] crawl start ' + url);
+        console.log(++counter + '/' + items.length, '[CACHE] crawl start ' + url);
         return callback();
     }
 
-    console.log('[LIVE] crawl start ' + url);
-    crawl_item(url.pathname).then(function () {
-        callback();
-    }).catch(callback);
+    console.log(++counter + '/' + items.length, '[LIVE] crawl start ' + url);
+    setTimeout(function () {
+        crawl_item(url.pathname).then(function () {
+            callback();
+        }).catch(callback);
+    }, 1000);
 
-}, function(err) {
+}, function (err) {
     if (err) {
-        console.err('error', err);
+        console.error(err);
     }
 });
