@@ -11,8 +11,6 @@ async function crawl_list(keywords, page_number) {
     let dir_path = 'cache/' + now;
     let file_path = dir_path + '/' + keywords + '-' + page_number + '.html';
 
-    console.log(page_url);
-
     if (!fs.existsSync(dir_path)) {
         fs.mkdirSync(dir_path);
     }
@@ -39,9 +37,8 @@ let keywords = [
     'machine%20learning',
     'künstliche%20intelligenz'
 ];
-var counter = 0;
+let counter = 0;
 
-loop:
 for (let keyword of keywords) {
     for (let page_number = 1; page_number < 41; page_number++) {
 
@@ -50,17 +47,15 @@ for (let keyword of keywords) {
         let file_path = dir_path + '/' + keyword + '-' + page_number + '.html';
 
         if (!fs.existsSync(file_path)) {
-            crawl_list(keyword, page_number)
-                .then(function () {
-                    console.log('finished');
-                })
-                .catch(function () {
-                    console.error('error', arguments);
-                });
-
-            if (++counter == 10) {
-                break loop;
-            }
+            setTimeout(function () {
+                crawl_list(keyword, page_number)
+                    .then(function () {
+                        console.log('finished');
+                    })
+                    .catch(function () {
+                        console.error('error', arguments);
+                    });
+            }, 1000);
         }
     }
 }

@@ -55,9 +55,10 @@ function process(keywords, html) {
 
 let keywords = 'künstliche%20intelligenz';
 let items = [];
+let now = new Date().toISOString().split('T')[0];
 
 for (let page_number = 1; page_number < 39; page_number++) {
-    let html = fs.readFileSync('cache/2019-01-27/' + keywords + '-' + page_number + '.html', 'utf-8');
+    let html = fs.readFileSync('cache/' + now + '/' + keywords + '-' + page_number + '.html', 'utf-8');
     let data = process(keywords, html);
 
     items = items.concat(data.items);
