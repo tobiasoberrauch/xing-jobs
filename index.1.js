@@ -5,7 +5,6 @@ const cheerio = require('cheerio');
 const fs = require('fs');
 const async = require("async");
 const path = require('path');
-const request = require('request');
 
 const DEBUG = false;
 const keywords = [
@@ -56,7 +55,7 @@ async function create_browser_page(browser) {
 }
 
 async function crawl_item(pathname) {
-
+    
     const browser = await puppeteer.launch({
         devtools: DEBUG
     });
@@ -153,32 +152,27 @@ async function fetch_items(items) {
     });
 }
 
+for (let keyword of keywords) {
+    for (let page_number = 2; page_number < 3; page_number++) {
+        let file_path = dir_path + '/' + keyword + '-' + page_number + '.html';
 
+        setTimeout(function () {
+            fetch_list(keyword, page_number)
+                .then(fetch_items)
+                .catch(console.error);
+        }, 1000);
 
-
-for (keyword of keywords) {
-
-    // meta.maxPage
-    // meta.currentPage
-    // meta.count
-
-    let file_path = 'cache/' + now + '/' + keyword + '.json';
-
-    if (fs.readFileSync(file_path)) {
-        console.log('Using cached list for ' + keyword);
-
-        let raw_data = fs.readFileSync(file_path, 'utf-8');
-        let data = JSON.parse(raw_data);
-        
-        fetch_items(data.items);
-    } else {
-        console.log('Using live list for ' + keyword)
-
-        let url = 'https://www.xing.com/jobs/api/search?keywords=' + keyword + '&sc_o=jobs_recent_searches&limit=1000&offset=0';
-
-        request.get(url, function (error, response, body) {
-            let data = JSON.parse(body);
-            fetch_items(data.items);
-        });
+        /*
+        if (fs.existsSync(file_path)) {
+            fetch_items(read_list_file(keyword, page_number));
+        }
+        else {
+            setTimeout(function () {
+                fetch_list(keyword, page_number)
+                    .then(fetch_items)
+                    .catch(console.error);
+            }, 1000);
+        }
+        */
     }
 }

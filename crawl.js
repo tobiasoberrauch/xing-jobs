@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const sleep = require('sleep');
 
-const DEBUG = false;
+const DEBUG = true;
 
 async function crawl_list(keywords, page_number) {
     let now = new Date().toISOString().split('T')[0];
@@ -19,6 +19,18 @@ async function crawl_list(keywords, page_number) {
         devtools: DEBUG
     });
     const page = await browser.newPage();
+    page.setExtraHTTPHeaders({
+        'Accept': 'application/json',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'de',
+        'Connection': 'keep-alive',
+        'Content-Type': 'application/json',
+        'Host': 'www.xing.com',
+        'Origin': 'https://www.xing.com',
+        'Referer': 'https://www.xing.com/jobs/sear…tist&sc_o=jobs_recent_searches',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0',
+        'X-Requested-With': 'XMLHttpRequest'
+    });; 
 
     await page.goto(page_url, {
         waitUntil: 'networkidle2'
@@ -31,6 +43,9 @@ async function crawl_list(keywords, page_number) {
 
     await browser.close();
 };
+crawl_list('machine%20learning', 1);
+
+/*
 
 
 let keywords = [
@@ -59,3 +74,4 @@ for (let keyword of keywords) {
         }
     }
 }
+*/
