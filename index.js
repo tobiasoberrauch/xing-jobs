@@ -8,9 +8,12 @@ const path = require('path');
 const request = require('request');
 
 const DEBUG = false;
+const LIMIT = 200;
+
 const keywords = [
     'machine%20learning',
-    'künstliche%20intelligenz'
+    'kuenstliche%20intelligenz',
+    'digitalisierung'
 ];
 const now = new Date().toISOString().split('T')[0];
 const dir_path = 'cache/' + now;
@@ -29,12 +32,6 @@ function extract_items(html) {
             link: $(this).find('.result-result-logo-75e305ef').attr('href')
         };
     }).get();
-}
-
-function read_list_file(keyword, page_number) {
-    let html = fs.readFileSync('cache/' + now + '/' + keyword + '-' + page_number + '.html', 'utf-8');
-
-    return extract_items(html);
 }
 
 async function create_browser_page(browser) {
@@ -101,7 +98,7 @@ async function fetch_by_browser(page_url) {
     return html;
 }
 
-async function fetch_list(keyword, page_number) {
+async function fetch_list_by_browser(keyword, page_number) {
     let now = new Date().toISOString().split('T')[0];
     let page_url = 'https://www.xing.com/jobs/search?keywords=' + keyword + '&sc_o=jobs_search_button&page=' + page_number;
     let dir_path = 'cache/' + now;
@@ -144,7 +141,7 @@ async function fetch_items(items) {
             crawl_item(url.pathname).then(function () {
                 callback();
             }).catch(callback);
-        }, 1000);
+        }, 5000);
 
     }, function (err) {
         if (err) {
@@ -153,32 +150,46 @@ async function fetch_items(items) {
     });
 }
 
+async function fetch_list(keyword, offset = 0) {
+    let file_path = 'cache/' + now + '/' + keyword + '-' + LIMIT + '-' + offset + '.json';
+    
+    console.log('Check ' + file_path);
 
-
-
-for (keyword of keywords) {
-
-    // meta.maxPage
-    // meta.currentPage
-    // meta.count
-
-    let file_path = 'cache/' + now + '/' + keyword + '.json';
-
-    if (fs.readFileSync(file_path)) {
+    if (fs.existsSync(file_path) && fs.readFileSync(file_path)) {
         console.log('Using cached list for ' + keyword);
 
         let raw_data = fs.readFileSync(file_path, 'utf-8');
         let data = JSON.parse(raw_data);
-        
-        fetch_items(data.items);
-    } else {
-        console.log('Using live list for ' + keyword)
 
-        let url = 'https://www.xing.com/jobs/api/search?keywords=' + keyword + '&sc_o=jobs_recent_searches&limit=1000&offset=0';
+        await fetch_items(data.items);
+
+        if (data.meta.currentPage < data.meta.maxPage) {
+            fetch_list(keyword, offset + LIMIT);
+        }
+    } else {
+        let url = 'https://www.xing.com/jobs/api/search?keywords=' + keyword + '&sc_o=jobs_recent_searches&limit=' + LIMIT + '&offset=' + offset;
+
+        console.log('Using live list for ' + keyword + ' (' + url + ')');
 
         request.get(url, function (error, response, body) {
+            console.log('error', error);
+            console.log('body', body);
+            console.log('url', url);
+
             let data = JSON.parse(body);
+
+            fs.writeFileSync(file_path, JSON.stringify(data));
+
             fetch_items(data.items);
+
+            if (data.meta.currentPage < data.meta.maxPage) {
+                fetch_list(keyword, LIMIT, data.meta.currentPage + LIMIT);
+            }
         });
-    }
+    }     
+}
+
+
+for (keyword of keywords) {
+    fetch_list(keyword, 0);
 }
