@@ -12,6 +12,6 @@ function process(html) {
     };
 }
 
-let html = fs.readFileSync('cache/2019-01-27/schwalbach-taunus-data-scientist-statistician-42980641.html', 'utf-8');
+let html = fs.readFileSync('cache\\2019-02-03\\jobs\\aachen-abschlussarbeit-einsatzmoeglichkeiten-artificial-intelligence-machine-learning-produktion-40133935.html', 'utf-8');
 data = process(html);
 console.log('Process finished', data);

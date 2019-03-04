@@ -13,7 +13,7 @@ const LIMIT = 200;
 const keywords = [
     'machine%20learning',
     'kuenstliche%20intelligenz',
-    'digitalisierung'
+    //'digitalisierung'
 ];
 const now = new Date().toISOString().split('T')[0];
 const dir_path = 'cache/' + now;
@@ -61,7 +61,6 @@ async function crawl_item(pathname) {
 
     let page_url = 'https://www.xing.com' + pathname;
 
-    let now = new Date().toISOString().split('T')[0];
     let file_path = 'cache/' + now + '/' + pathname + '.html';
     let dir_path = path.dirname(file_path);
 
@@ -99,7 +98,6 @@ async function fetch_by_browser(page_url) {
 }
 
 async function fetch_list_by_browser(keyword, page_number) {
-    let now = new Date().toISOString().split('T')[0];
     let page_url = 'https://www.xing.com/jobs/search?keywords=' + keyword + '&sc_o=jobs_search_button&page=' + page_number;
     let dir_path = 'cache/' + now;
     let file_path = dir_path + '/' + keyword + '-' + page_number + '.html';
@@ -128,7 +126,6 @@ async function fetch_items(items) {
         } catch (TypeError) {
             return callback();
         }
-        let now = new Date().toISOString().split('T')[0];
         let file_path = 'cache/' + now + '/' + url.pathname + '.html';
 
         if (fs.existsSync(file_path)) {
@@ -161,7 +158,7 @@ async function fetch_list(keyword, offset = 0) {
         let raw_data = fs.readFileSync(file_path, 'utf-8');
         let data = JSON.parse(raw_data);
 
-        await fetch_items(data.items);
+        //await fetch_items(data.items);
 
         if (data.meta.currentPage < data.meta.maxPage) {
             fetch_list(keyword, offset + LIMIT);
@@ -178,9 +175,13 @@ async function fetch_list(keyword, offset = 0) {
 
             let data = JSON.parse(body);
 
+            if (!fs.existsSync(path.dirname(file_path))) {
+                fs.mkdirSync(path.dirname(file_path));
+            }
+            
             fs.writeFileSync(file_path, JSON.stringify(data));
 
-            fetch_items(data.items);
+            //fetch_items(data.items);
 
             if (data.meta.currentPage < data.meta.maxPage) {
                 fetch_list(keyword, LIMIT, data.meta.currentPage + LIMIT);
